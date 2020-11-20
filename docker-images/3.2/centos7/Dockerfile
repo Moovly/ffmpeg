@@ -321,18 +321,6 @@ RUN  \
         make && \
         make install && \
         rm -rf ${DIR}
-## libvstab https://github.com/georgmartius/vid.stab
-RUN  \
-        DIR=/tmp/vid.stab && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/georgmartius/vid.stab/archive/v${LIBVIDSTAB_VERSION}.tar.gz && \
-        echo ${LIBVIDSTAB_SHA256SUM} | sha256sum --check &&  \
-        tar -zx --strip-components=1 -f v${LIBVIDSTAB_VERSION}.tar.gz && \
-        cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" . && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
 ## fridibi https://www.fribidi.org/
 RUN  \
         DIR=/tmp/fribidi && \
@@ -490,7 +478,6 @@ RUN \
         make install && \
         rm -rf ${DIR}
 
-
 ## libsrt https://github.com/Haivision/srt
 RUN \
         DIR=/tmp/srt && \
@@ -551,7 +538,6 @@ RUN \
         --enable-libass \
         --enable-fontconfig \
         --enable-libfreetype \
-        --enable-libvidstab \
         --enable-libmp3lame \
         --enable-libopus \
         --enable-libtheora \
@@ -568,7 +554,6 @@ RUN \
         --enable-postproc \
         --enable-small \
         --enable-version3 \
-        --enable-libbluray \
         --extra-libs=-ldl \
         --prefix="${PREFIX}" \
         --enable-libopenjpeg \

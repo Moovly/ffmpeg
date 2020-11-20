@@ -174,6 +174,7 @@ RUN \
         cd x265-${X265_VERSION}/build/linux && \
         sed -i "/-DEXTRA_LIB/ s/$/ -DCMAKE_INSTALL_PREFIX=\${PREFIX}/" multilib.sh && \
         sed -i "/^cmake/ s/$/ -DENABLE_CLI=OFF/" multilib.sh && \
+        export CXXFLAGS="${CXXFLAGS} -fPIC" && \
         ./multilib.sh && \
         make -C 8bit install && \
         rm -rf ${DIR}
@@ -222,6 +223,8 @@ RUN \
         curl -sLO http://downloads.xiph.org/releases/theora/libtheora-${THEORA_VERSION}.tar.gz && \
         echo ${THEORA_SHA256SUM} | sha256sum --check && \
         tar -zx --strip-components=1 -f libtheora-${THEORA_VERSION}.tar.gz && \
+        curl -sL 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD' -o config.guess && \
+        curl -sL 'http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD' -o config.sub && \
         ./configure --prefix="${PREFIX}" --with-ogg="${PREFIX}" --enable-shared && \
         make && \
         make install && \
@@ -292,6 +295,7 @@ RUN \
         cd ${DIR} && \
         curl -sL https://github.com/uclouvain/openjpeg/archive/v${OPENJPEG_VERSION}.tar.gz | \
         tar -zx --strip-components=1 && \
+        export CFLAGS="${CFLAGS} -DPNG_ARM_NEON_OPT=0" && \
         cmake -DBUILD_THIRDPARTY:BOOL=ON -DCMAKE_INSTALL_PREFIX="${PREFIX}" . && \
         make && \
         make install && \
@@ -305,18 +309,6 @@ RUN  \
         echo ${FREETYPE_SHA256SUM} | sha256sum --check && \
         tar -zx --strip-components=1 -f freetype-${FREETYPE_VERSION}.tar.gz && \
         ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-## libvstab https://github.com/georgmartius/vid.stab
-RUN  \
-        DIR=/tmp/vid.stab && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/georgmartius/vid.stab/archive/v${LIBVIDSTAB_VERSION}.tar.gz && \
-        echo ${LIBVIDSTAB_SHA256SUM} | sha256sum --check &&  \
-        tar -zx --strip-components=1 -f v${LIBVIDSTAB_VERSION}.tar.gz && \
-        cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" . && \
         make && \
         make install && \
         rm -rf ${DIR}
@@ -477,21 +469,6 @@ RUN \
         make install && \
         rm -rf ${DIR}
 
-## libzmq https://github.com/zeromq/libzmq/
-RUN \
-        DIR=/tmp/libzmq && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/zeromq/libzmq/archive/v${LIBZMQ_VERSION}.tar.gz && \
-        echo ${LIBZMQ_SHA256SUM} | sha256sum --check && \
-        tar -xz --strip-components=1 -f v${LIBZMQ_VERSION}.tar.gz && \
-        ./autogen.sh && \
-        ./configure --prefix="${PREFIX}" && \
-        make && \
-        make check && \
-        make install && \
-        rm -rf ${DIR}
-
 ## libsrt https://github.com/Haivision/srt
 RUN \
         DIR=/tmp/srt && \
@@ -552,7 +529,6 @@ RUN \
         --enable-libass \
         --enable-fontconfig \
         --enable-libfreetype \
-        --enable-libvidstab \
         --enable-libmp3lame \
         --enable-libopus \
         --enable-libtheora \
@@ -569,8 +545,6 @@ RUN \
         --enable-postproc \
         --enable-small \
         --enable-version3 \
-        --enable-libbluray \
-        --enable-libzmq \
         --extra-libs=-ldl \
         --prefix="${PREFIX}" \
         --enable-libopenjpeg \
@@ -587,7 +561,6 @@ RUN \
         --extra-ldflags="-L${PREFIX}/lib -L/usr/local/cuda/lib64 -L/usr/local/cuda/lib32/" && \
 make && \
         make install && \
-        make tools/zmqsend && cp tools/zmqsend ${PREFIX}/bin/ && \
         make distclean && \
         hash -r && \
         cd tools && \
