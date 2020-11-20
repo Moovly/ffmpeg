@@ -561,7 +561,6 @@ RUN \
         --extra-ldflags="-L${PREFIX}/lib" && \
         make && \
         make install && \
-        make tools/zmqsend && cp tools/zmqsend ${PREFIX}/bin/ && \
         make distclean && \
         hash -r && \
         cd tools && \

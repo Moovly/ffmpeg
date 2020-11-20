@@ -391,7 +391,6 @@ RUN \
         %%FFMPEG_CONFIG_FLAGS%%
         make && \
         make install && \
-        make tools/zmqsend && cp tools/zmqsend ${PREFIX}/bin/ && \
         make distclean && \
         hash -r && \
         cd tools && \
