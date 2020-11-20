@@ -166,7 +166,6 @@ for version in keep_version:
             "--enable-libass",
             "--enable-fontconfig",
             "--enable-libfreetype",
-            "--enable-libvidstab",
             "--enable-libmp3lame",
             "--enable-libopus",
             "--enable-libtheora",
@@ -183,7 +182,6 @@ for version in keep_version:
             "--enable-postproc",
             "--enable-small",
             "--enable-version3",
-            "--enable-libbluray",
             "--extra-libs=-ldl",
             '--prefix="${PREFIX}"',
         ]

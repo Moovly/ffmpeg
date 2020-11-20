@@ -263,18 +263,6 @@ RUN  \
         make && \
         make install && \
         rm -rf ${DIR}
-## libvstab https://github.com/georgmartius/vid.stab
-RUN  \
-        DIR=/tmp/vid.stab && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/georgmartius/vid.stab/archive/v${LIBVIDSTAB_VERSION}.tar.gz && \
-        echo ${LIBVIDSTAB_SHA256SUM} | sha256sum --check &&  \
-        tar -zx --strip-components=1 -f v${LIBVIDSTAB_VERSION}.tar.gz && \
-        cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" . && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
 ## fridibi https://www.fribidi.org/
 RUN  \
         DIR=/tmp/fribidi && \
@@ -407,32 +395,6 @@ RUN \
         make install && \
         rm -rf ${DIR}
 
-## libxml2 - for libbluray
-RUN \
-        DIR=/tmp/libxml2 && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://gitlab.gnome.org/GNOME/libxml2/-/archive/v${LIBXML2_VERSION}/libxml2-v${LIBXML2_VERSION}.tar.gz && \
-        echo ${LIBXML2_SHA256SUM} | sha256sum --check && \
-        tar -xz --strip-components=1 -f libxml2-v${LIBXML2_VERSION}.tar.gz && \
-        ./autogen.sh --prefix="${PREFIX}" --with-ftp=no --with-http=no --with-python=no && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-
-## libbluray - Requires libxml, freetype, and fontconfig
-RUN \
-        DIR=/tmp/libbluray && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://download.videolan.org/pub/videolan/libbluray/${LIBBLURAY_VERSION}/libbluray-${LIBBLURAY_VERSION}.tar.bz2 && \
-        echo ${LIBBLURAY_SHA256SUM} | sha256sum --check && \
-        tar -jx --strip-components=1 -f libbluray-${LIBBLURAY_VERSION}.tar.bz2 && \
-        ./configure --prefix="${PREFIX}" --disable-examples --disable-bdjava-jar --disable-static --enable-shared && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-
 
 ## libsrt https://github.com/Haivision/srt
 RUN \
@@ -494,7 +456,6 @@ RUN \
         --enable-libass \
         --enable-fontconfig \
         --enable-libfreetype \
-        --enable-libvidstab \
         --enable-libmp3lame \
         --enable-libopus \
         --enable-libtheora \
@@ -511,7 +472,6 @@ RUN \
         --enable-postproc \
         --enable-small \
         --enable-version3 \
-        --enable-libbluray \
         --extra-libs=-ldl \
         --prefix="${PREFIX}" \
         --enable-libopenjpeg \
