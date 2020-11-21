@@ -341,17 +341,6 @@ RUN \
         rm -rf ${DIR}
 
 RUN \
-        DIR=/tmp/xproto && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://www.x.org/archive/individual/proto/xproto-${XPROTO_VERSION}.tar.gz && \
-        tar -zx --strip-components=1 -f xproto-${XPROTO_VERSION}.tar.gz && \
-        ./configure --srcdir=${DIR} --prefix="${PREFIX}" && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-
-RUN \
         DIR=/tmp/libXau && \
         mkdir -p ${DIR} && \
         cd ${DIR} && \
