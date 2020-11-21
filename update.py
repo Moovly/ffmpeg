@@ -172,7 +172,6 @@ for version in keep_version:
             "--enable-libvorbis",
             "--enable-libvpx",
             "--enable-libwebp",
-            "--enable-libxcb",
             "--enable-libx265",
             "--enable-libxvid",
             "--enable-libx264",
@@ -191,14 +190,6 @@ for version in keep_version:
         LDFLAGS = [
             "-L${PREFIX}/lib",
         ]
-
-        # OpenJpeg 2.1 is not supported in 2.8
-        if version[0:3] != "2.8":
-            FFMPEG_CONFIG_FLAGS.append("--enable-libopenjpeg")
-            FFMPEG_CONFIG_FLAGS.append("--enable-libkvazaar")
-        if version == "snapshot" or int(version[0]) > 3:
-            FFMPEG_CONFIG_FLAGS.append("--enable-libaom")
-            FFMPEG_CONFIG_FLAGS.append("--extra-libs=-lpthread")
 
         # LibSRT is supported from 4.0
         if version == "snapshot" or int(version[0]) >= 4:
