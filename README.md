@@ -15,7 +15,7 @@ This image can be used as a base for an encoding farm.
 ## Builds
 
 There are different builds available:
-- alpine based images `ffmpeg:<version>-alpine38` or `ffmpeg:<version>-alpine312` (the `ffmpeg:<version>-alpine` builds are not updated any more)
+- alpine based images `ffmpeg:<version>-alpine38` or `ffmpeg:<version>-alpine315` (the `ffmpeg:<version>-alpine` builds are not updated any more)
   - alpine based scratch images `ffmpeg:<version>-scratch38` or `ffmpeg:<version>-scratch312` (experimental image containing only FFmpeg and libraries, the `ffmpeg:<version>-alpine` builds are not updated any more)
 - centos based images `ffmpeg:<version>-centos7` or `ffmpeg:<version>-centos8`
 - ubuntu based images `ffmpeg:<version>-ubuntu1804` or `ffmpeg:<version>-ubuntu2004` (the default, you can also use `ffmpeg:<version>-ubuntu` as an alias)
@@ -34,7 +34,7 @@ There are different builds available:
 
 Not all combinations are supported and older versions will fade out over time. See the table below for the currently supported combinations.
 
-| *Version*  | alpine38           | alpine312          | centos7            | centos8            | nvidia1804         | scratch38          | scratch312         | ubuntu1804         | ubuntu2004         | vaapi1804          | vaapi2004          |
+| *Version*  | alpine38           | alpine315          | centos7            | centos8            | nvidia1804         | scratch38          | scratch312         | ubuntu1804         | ubuntu2004         | vaapi1804          | vaapi2004          |
 | ---------- | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ | ------------------ |
 | *3.2*      | :heavy_check_mark: | :x:                | :heavy_check_mark: | :x:                | :x:                | :heavy_check_mark: | :x:                | :x:                | :heavy_check_mark: | :x:                | :heavy_check_mark: |
 | *3.3*      | :x:                | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x:                | :heavy_check_mark: |

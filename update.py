@@ -21,7 +21,7 @@ SKIP_VERSIONS = "3.1.11 3.0.12 snapshot"
 VARIANTS = [
     {"name": "ubuntu1804", "parent": "ubuntu"},
     {"name": "ubuntu2004", "parent": "ubuntu"},
-    {"name": "alpine313", "parent": "alpine"},
+    {"name": "alpine315", "parent": "alpine"},
     {"name": "centos7", "parent": "centos"},
     {"name": "centos8", "parent": "centos"},
     {"name": "scratch313", "parent": "scratch"},
@@ -53,7 +53,7 @@ version, all_versions = all_versions[0], all_versions[1:]
 
 SKIP_VARIANTS = {
     "3.2": [
-        "alpine312",
+        "alpine315",
         "centos8",
         "nvidia2004",
         "scratch312",

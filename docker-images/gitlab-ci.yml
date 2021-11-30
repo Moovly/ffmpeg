@@ -29,14 +29,14 @@ stages:
     PARENT: "ubuntu"
     ISPARENT: "True"
 
-4.4.1-alpine313:
+4.4.1-alpine315:
   extends: .docker
   stage: alpine
   variables:
     MAJOR_VERSION: 4
     VERSION: "4.4"
     LONG_VERSION: "4.4.1"
-    VARIANT: alpine313
+    VARIANT: alpine315
     PARENT: "alpine"
     ISPARENT: "True"
 
@@ -128,14 +128,14 @@ stages:
     PARENT: "ubuntu"
     ISPARENT: "True"
 
-4.3.3-alpine313:
+4.3.3-alpine315:
   extends: .docker
   stage: alpine
   variables:
     MAJOR_VERSION: 4
     VERSION: "4.3"
     LONG_VERSION: "4.3.3"
-    VARIANT: alpine313
+    VARIANT: alpine315
     PARENT: "alpine"
     ISPARENT: "True"
 
@@ -227,14 +227,14 @@ stages:
     PARENT: "ubuntu"
     ISPARENT: "True"
 
-4.2.5-alpine313:
+4.2.5-alpine315:
   extends: .docker
   stage: alpine
   variables:
     MAJOR_VERSION: 4
     VERSION: "4.2"
     LONG_VERSION: "4.2.5"
-    VARIANT: alpine313
+    VARIANT: alpine315
     PARENT: "alpine"
     ISPARENT: "True"
 
@@ -315,14 +315,14 @@ stages:
     PARENT: "ubuntu"
     ISPARENT: "True"
 
-4.1.8-alpine313:
+4.1.8-alpine315:
   extends: .docker
   stage: alpine
   variables:
     MAJOR_VERSION: 4
     VERSION: "4.1"
     LONG_VERSION: "4.1.8"
-    VARIANT: alpine313
+    VARIANT: alpine315
     PARENT: "alpine"
     ISPARENT: "True"
 
@@ -403,14 +403,14 @@ stages:
     PARENT: "ubuntu"
     ISPARENT: "True"
 
-4.0.6-alpine313:
+4.0.6-alpine315:
   extends: .docker
   stage: alpine
   variables:
     MAJOR_VERSION: 4
     VERSION: "4.0"
     LONG_VERSION: "4.0.6"
-    VARIANT: alpine313
+    VARIANT: alpine315
     PARENT: "alpine"
     ISPARENT: "True"
 
@@ -491,14 +491,14 @@ stages:
     PARENT: "ubuntu"
     ISPARENT: "True"
 
-3.4.9-alpine313:
+3.4.9-alpine315:
   extends: .docker
   stage: alpine
   variables:
     MAJOR_VERSION: 3
     VERSION: "3.4"
     LONG_VERSION: "3.4.9"
-    VARIANT: alpine313
+    VARIANT: alpine315
     PARENT: "alpine"
     ISPARENT: "True"
 
@@ -579,14 +579,14 @@ stages:
     PARENT: "ubuntu"
     ISPARENT: "True"
 
-3.3.9-alpine313:
+3.3.9-alpine315:
   extends: .docker
   stage: alpine
   variables:
     MAJOR_VERSION: 3
     VERSION: "3.3"
     LONG_VERSION: "3.3.9"
-    VARIANT: alpine313
+    VARIANT: alpine315
     PARENT: "alpine"
     ISPARENT: "True"
 
@@ -654,17 +654,6 @@ stages:
     LONG_VERSION: "3.2.16"
     VARIANT: ubuntu2004
     PARENT: "ubuntu"
-    ISPARENT: "True"
-
-3.2.16-alpine313:
-  extends: .docker
-  stage: alpine
-  variables:
-    MAJOR_VERSION: 3
-    VERSION: "3.2"
-    LONG_VERSION: "3.2.16"
-    VARIANT: alpine313
-    PARENT: "alpine"
     ISPARENT: "True"
 
 3.2.16-centos7:
