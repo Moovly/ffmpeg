@@ -18,7 +18,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@master
       with:
         aws-region: eu-west-1
-        role-to-assume: ${{ secrets.aws-role }}
+        role-to-assume: ${{ secrets.AWS_ROLE_GENERAL_TO_ASSUME }}
         role-duration-seconds: 3600
         role-session-name: CI
     - name: Login to Amazon ECR
