@@ -39,9 +39,9 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       with:
         platforms: linux/amd64,linux/arm64
-        file: docker-images/4.4/alpine315/Dockerfile
+        file: docker-images/5.1/alpine313/Dockerfile
         push: true
         tags: |
           ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
-          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:4.4-alpine315
+          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:5.1-alpine316
 
