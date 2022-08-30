@@ -137,19 +137,6 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
-### x265 http://x265.org/
-RUN \
-        DIR=/tmp/x265 && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sL https://github.com/videolan/x265/archive/refs/tags/${X265_VERSION}.tar.gz | \
-        tar -zx && \
-        cd x265-${X265_VERSION}/build/linux && \
-        sed -i "/-DEXTRA_LIB/ s/$/ -DCMAKE_INSTALL_PREFIX=\${PREFIX}/" multilib.sh && \
-        sed -i "/^cmake/ s/$/ -DENABLE_CLI=OFF/" multilib.sh && \
-        ./multilib.sh && \
-        make -C 8bit install && \
-        rm -rf ${DIR}
 ### libogg https://www.xiph.org/ogg/
 RUN \
         DIR=/tmp/ogg && \
@@ -543,7 +530,6 @@ RUN  \
         --enable-libvpx \
         --enable-libwebp \
         --enable-libx264 \
-        --enable-libx265 \
         --enable-libxcb \
         --enable-libxvid \
         --enable-libzmq \
