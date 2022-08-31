@@ -380,7 +380,6 @@ RUN  \
         --enable-libopus \
         --enable-libsrt \
         --enable-libtheora \
-        --enable-libvidstab \
         --enable-libvorbis \
         --enable-libvpx \
         --enable-libwebp \
