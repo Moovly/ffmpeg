@@ -170,7 +170,6 @@ for version in keep_version:
             "--enable-libopencore-amrnb",
             "--enable-libopencore-amrwb",
             "--enable-gpl",
-            "--enable-libass",
             "--enable-fontconfig",
             "--enable-libfreetype",
             "--enable-libmp3lame",
@@ -180,7 +179,6 @@ for version in keep_version:
             "--enable-libvpx",
             "--enable-libwebp",
             "--enable-libx265",
-            "--enable-libxvid",
             "--enable-libx264",
             "--enable-nonfree",
             "--enable-openssl",
@@ -197,14 +195,6 @@ for version in keep_version:
         LDFLAGS = [
             "-L${PREFIX}/lib",
         ]
-
-        # LibSRT is supported from 4.0
-        if version == "snapshot" or int(version[0]) >= 4:
-            FFMPEG_CONFIG_FLAGS.append("--enable-libsrt")
-
-        # LibARIBB24 is supported from 4.2
-        if version == "snapshot" or float(version[0:3]) >= 4.2:
-            FFMPEG_CONFIG_FLAGS.append("--enable-libaribb24")
 
         if (template.find("meson") > 0) and (
             version == "snapshot" or float(version[0:3]) >= 4.3

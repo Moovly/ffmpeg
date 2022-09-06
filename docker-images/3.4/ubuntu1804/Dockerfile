@@ -16,7 +16,7 @@ RUN     apt-get -yqq update && \
 
 FROM base as build
 
-ENV         FFMPEG_VERSION=3.4.9 \
+ENV         FFMPEG_VERSION=3.4.11 \
     AOM_VERSION=v1.0.0 \
     FDKAAC_VERSION=0.1.5 \
     FONTCONFIG_VERSION=2.12.4 \
@@ -236,19 +236,6 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
-### xvid https://www.xvid.com/
-RUN \
-        DIR=/tmp/xvid && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO http://downloads.xvid.org/downloads/xvidcore-${XVID_VERSION}.tar.gz && \
-        echo ${XVID_SHA256SUM} | sha256sum --check && \
-        tar -zx -f xvidcore-${XVID_VERSION}.tar.gz && \
-        cd xvidcore/build/generic && \
-        ./configure --prefix="${PREFIX}" --bindir="${PREFIX}/bin" && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
 ### fdk-aac https://github.com/mstorsjo/fdk-aac
 RUN \
         DIR=/tmp/fdk-aac && \
@@ -310,44 +297,6 @@ RUN  \
         make && \
         make install && \
         rm -rf ${DIR}
-## libass https://github.com/libass/libass
-RUN  \
-        DIR=/tmp/libass && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/libass/libass/archive/${LIBASS_VERSION}.tar.gz && \
-        echo ${LIBASS_SHA256SUM} | sha256sum --check && \
-        tar -zx --strip-components=1 -f ${LIBASS_VERSION}.tar.gz && \
-        ./autogen.sh && \
-        ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-## kvazaar https://github.com/ultravideo/kvazaar
-RUN \
-        DIR=/tmp/kvazaar && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/ultravideo/kvazaar/archive/v${KVAZAAR_VERSION}.tar.gz && \
-        tar -zx --strip-components=1 -f v${KVAZAAR_VERSION}.tar.gz && \
-        ./autogen.sh && \
-        ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-
-RUN \
-        DIR=/tmp/aom && \
-        git clone --branch ${AOM_VERSION} --depth 1 https://aomedia.googlesource.com/aom ${DIR} ; \
-        cd ${DIR} ; \
-        rm -rf CMakeCache.txt CMakeFiles ; \
-        mkdir -p ./aom_build ; \
-        cd ./aom_build ; \
-        cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" -DBUILD_SHARED_LIBS=1 ..; \
-        make ; \
-        make install ; \
-        rm -rf ${DIR}
-
 ## libxml2 - for libbluray
 RUN \
         DIR=/tmp/libxml2 && \
@@ -372,19 +321,6 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
-
-## libsrt https://github.com/Haivision/srt
-RUN \
-        DIR=/tmp/srt && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/Haivision/srt/archive/v${LIBSRT_VERSION}.tar.gz && \
-        tar -xz --strip-components=1 -f v${LIBSRT_VERSION}.tar.gz && \
-        cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" . && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-
 ## libpng
 RUN \
         DIR=/tmp/png && \
@@ -397,27 +333,11 @@ RUN \
         make install && \
         rm -rf ${DIR}
 
-## libaribb24
-RUN \
-        DIR=/tmp/b24 && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/nkoriyama/aribb24/archive/v${LIBARIBB24_VERSION}.tar.gz && \
-        echo ${LIBARIBB24_SHA256SUM} | sha256sum --check && \
-        tar -xz --strip-components=1 -f v${LIBARIBB24_VERSION}.tar.gz && \
-        autoreconf -fiv && \
-        ./configure CFLAGS="-I${PREFIX}/include -fPIC" --prefix="${PREFIX}" && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-
 ## ffmpeg https://ffmpeg.org/
 RUN  \
         DIR=/tmp/ffmpeg && mkdir -p ${DIR} && cd ${DIR} && \
         curl -sLO https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
         tar -jx --strip-components=1 -f ffmpeg-${FFMPEG_VERSION}.tar.bz2
-
-
 
 RUN \
         DIR=/tmp/ffmpeg && mkdir -p ${DIR} && cd ${DIR} && \
@@ -430,7 +350,6 @@ RUN \
         --enable-libopencore-amrnb \
         --enable-libopencore-amrwb \
         --enable-gpl \
-        --enable-libass \
         --enable-fontconfig \
         --enable-libfreetype \
         --enable-libmp3lame \
@@ -440,7 +359,6 @@ RUN \
         --enable-libvpx \
         --enable-libwebp \
         --enable-libx265 \
-        --enable-libxvid \
         --enable-libx264 \
         --enable-nonfree \
         --enable-openssl \

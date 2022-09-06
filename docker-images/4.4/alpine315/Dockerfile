@@ -4,7 +4,7 @@
 #
 #
 
-FROM        alpine:3.15 AS base
+FROM        alpine:3.16 AS base
 
 RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat git
 
@@ -61,6 +61,7 @@ ARG         XVID_SHA256SUM="4e9fd62728885855bc5007fe1be58df42e5e274497591fec3724
 ARG         LIBBLURAY_SHA256SUM="a3dd452239b100dc9da0d01b30e1692693e2a332a7d29917bf84bb10ea7c0b42 libbluray-1.1.2.tar.bz2"
 ARG         LIBZMQ_SHA256SUM="02ecc88466ae38cf2c8d79f09cfd2675ba299a439680b64ade733e26a349edeb v4.3.2.tar.gz"
 ARG         LIBARIBB24_SHA256SUM="f61560738926e57f9173510389634d8c06cabedfa857db4b28fb7704707ff128 v1.0.3.tar.gz"
+ARG         LIBVMAF_SHA256SUM="e7fc00ae1322a7eccfcf6d4f1cdf9c67eec8058709887c8c6c3795c617326f77 v2.1.1.tar.gz"
 
 
 ARG         LD_LIBRARY_PATH=/opt/ffmpeg/lib
@@ -235,19 +236,6 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
-### xvid https://www.xvid.com/
-RUN \
-        DIR=/tmp/xvid && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO http://downloads.xvid.org/downloads/xvidcore-${XVID_VERSION}.tar.gz && \
-        echo ${XVID_SHA256SUM} | sha256sum --check && \
-        tar -zx -f xvidcore-${XVID_VERSION}.tar.gz && \
-        cd xvidcore/build/generic && \
-        ./configure --prefix="${PREFIX}" --bindir="${PREFIX}/bin" && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
 ### fdk-aac https://github.com/mstorsjo/fdk-aac
 RUN \
         DIR=/tmp/fdk-aac && \
@@ -309,44 +297,6 @@ RUN  \
         make && \
         make install && \
         rm -rf ${DIR}
-## libass https://github.com/libass/libass
-RUN  \
-        DIR=/tmp/libass && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/libass/libass/archive/${LIBASS_VERSION}.tar.gz && \
-        echo ${LIBASS_SHA256SUM} | sha256sum --check && \
-        tar -zx --strip-components=1 -f ${LIBASS_VERSION}.tar.gz && \
-        ./autogen.sh && \
-        ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-## kvazaar https://github.com/ultravideo/kvazaar
-RUN \
-        DIR=/tmp/kvazaar && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/ultravideo/kvazaar/archive/v${KVAZAAR_VERSION}.tar.gz && \
-        tar -zx --strip-components=1 -f v${KVAZAAR_VERSION}.tar.gz && \
-        ./autogen.sh && \
-        ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-
-RUN \
-        DIR=/tmp/aom && \
-        git clone --branch ${AOM_VERSION} --depth 1 https://aomedia.googlesource.com/aom ${DIR} ; \
-        cd ${DIR} ; \
-        rm -rf CMakeCache.txt CMakeFiles ; \
-        mkdir -p ./aom_build ; \
-        cd ./aom_build ; \
-        cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" -DBUILD_SHARED_LIBS=1 ..; \
-        make ; \
-        make install ; \
-        rm -rf ${DIR}
-
 ## libxml2 - for libbluray
 RUN \
         DIR=/tmp/libxml2 && \
@@ -371,19 +321,6 @@ RUN \
         make && \
         make install && \
         rm -rf ${DIR}
-
-## libsrt https://github.com/Haivision/srt
-RUN \
-        DIR=/tmp/srt && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/Haivision/srt/archive/v${LIBSRT_VERSION}.tar.gz && \
-        tar -xz --strip-components=1 -f v${LIBSRT_VERSION}.tar.gz && \
-        cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" . && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-
 ## libpng
 RUN \
         DIR=/tmp/png && \
@@ -396,27 +333,11 @@ RUN \
         make install && \
         rm -rf ${DIR}
 
-## libaribb24
-RUN \
-        DIR=/tmp/b24 && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/nkoriyama/aribb24/archive/v${LIBARIBB24_VERSION}.tar.gz && \
-        echo ${LIBARIBB24_SHA256SUM} | sha256sum --check && \
-        tar -xz --strip-components=1 -f v${LIBARIBB24_VERSION}.tar.gz && \
-        autoreconf -fiv && \
-        ./configure CFLAGS="-I${PREFIX}/include -fPIC" --prefix="${PREFIX}" && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-
 ## ffmpeg https://ffmpeg.org/
 RUN  \
         DIR=/tmp/ffmpeg && mkdir -p ${DIR} && cd ${DIR} && \
         curl -sLO https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
         tar -jx --strip-components=1 -f ffmpeg-${FFMPEG_VERSION}.tar.bz2
-
-
 
 RUN \
         DIR=/tmp/ffmpeg && mkdir -p ${DIR} && cd ${DIR} && \
@@ -429,7 +350,6 @@ RUN \
         --enable-libopencore-amrnb \
         --enable-libopencore-amrwb \
         --enable-gpl \
-        --enable-libass \
         --enable-fontconfig \
         --enable-libfreetype \
         --enable-libmp3lame \
@@ -439,7 +359,6 @@ RUN \
         --enable-libvpx \
         --enable-libwebp \
         --enable-libx265 \
-        --enable-libxvid \
         --enable-libx264 \
         --enable-nonfree \
         --enable-openssl \
@@ -449,8 +368,6 @@ RUN \
         --enable-version3 \
         --extra-libs=-ldl \
         --prefix="${PREFIX}" \
-        --enable-libsrt \
-        --enable-libaribb24 \
         --extra-cflags="-I${PREFIX}/include" \
         --extra-ldflags="-L${PREFIX}/lib" && \
 make && \
