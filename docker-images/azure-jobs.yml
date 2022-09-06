@@ -26,10 +26,10 @@ jobs:
         ISPARENT:  True
 
 
-      alpine313_3.2.19:
-        MAJOR_VERSION: 3
-        VERSION:  3.2
-        LONG_VERSION: 3.2.19
+      alpine313_4.4.3:
+        MAJOR_VERSION: 4
+        VERSION:  4.4
+        LONG_VERSION: 4.4.3
         VARIANT:  alpine313
         PARENT: alpine
         ISPARENT:  True

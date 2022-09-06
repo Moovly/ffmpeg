@@ -54,6 +54,7 @@ version, all_versions = all_versions[0], all_versions[1:]
 SKIP_VARIANTS = {
     "3.2": [
         "alpine312",
+        "alpine313",
         "centos8",
         "nvidia2004",
         "scratch312",
@@ -66,7 +67,7 @@ SKIP_VARIANTS = {
     "4.1": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
     "4.2": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
     "4.3": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
-    "4.4": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
+    "4.4": ["alpine38", "nvidia1604", "scratch38", "vaapi1804"],
     "5.0": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
 }
 
@@ -181,10 +182,10 @@ for version in keep_version:
             "--enable-libvpx",
             "--enable-libwebp",
             "--enable-libx264",
-            "--enable-libx265",
-            "--enable-libxcb",
+#            "--enable-libx265",
+#            "--enable-libxcb",
             "--enable-libxvid",
-            "--enable-libzmq",
+#            "--enable-libzmq",
             "--enable-nonfree",
             "--enable-openssl",
             "--enable-postproc",

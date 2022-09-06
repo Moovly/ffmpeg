@@ -24,13 +24,13 @@ stages:
     PARENT: "alpine"
     ISPARENT: "True"
 
-3.2.19-alpine313:
+4.4.3-alpine313:
   extends: .docker
   stage: alpine
   variables:
-    MAJOR_VERSION: 3
-    VERSION: "3.2"
-    LONG_VERSION: "3.2.19"
+    MAJOR_VERSION: 4
+    VERSION: "4.4"
+    LONG_VERSION: "4.4.3"
     VARIANT: alpine313
     PARENT: "alpine"
     ISPARENT: "True"
