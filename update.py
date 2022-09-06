@@ -19,16 +19,15 @@ TEMPLATE_STR = "templates/Dockerfile-template.{0}"
 # https://ffmpeg.org/olddownload.html
 SKIP_VERSIONS = "3.1.11 3.0.12 snapshot"
 VARIANTS = [
-    {"name": "ubuntu1804", "parent": "ubuntu"},
-    {"name": "ubuntu2004", "parent": "ubuntu"},
+#    {"name": "ubuntu1804", "parent": "ubuntu"},
+#    {"name": "ubuntu2004", "parent": "ubuntu"},
     {"name": "alpine313", "parent": "alpine"},
-    {"name": "centos7", "parent": "centos"},
-    {"name": "centos8", "parent": "centos"},
-    {"name": "scratch313", "parent": "scratch"},
-    {"name": "vaapi1804", "parent": "vaapi"},
-    {"name": "vaapi2004", "parent": "vaapi"},
-    {"name": "nvidia2004", "parent": "nvidia"},
-    {"name": "rockylinux8", "parent": "rockylinux"},
+#    {"name": "centos7", "parent": "centos"},
+#    {"name": "centos8", "parent": "centos"},
+#    {"name": "scratch313", "parent": "scratch"},
+#    {"name": "vaapi1804", "parent": "vaapi"},
+#    {"name": "vaapi2004", "parent": "vaapi"},
+#    {"name": "nvidia2004", "parent": "nvidia"},
 ]
 FFMPEG_RELEASES = "https://ffmpeg.org/releases/"
 
@@ -61,11 +60,14 @@ SKIP_VARIANTS = {
         "ubuntu1804",
         "vaapi1804",
     ],
-    "3.3": ["alpine38", "nvidia1604", "scratch38", "vaapi1804"],
-    "3.4": ["alpine38", "nvidia1604", "scratch38", "vaapi1804"],
-    "4.0": ["alpine38", "nvidia1604", "scratch38", "vaapi1804"],
-    "4.1": ["alpine38", "nvidia1604", "scratch38", "vaapi1804"],
-    "4.2": ["alpine38", "nvidia1604", "scratch38", "vaapi1804"],
+    "3.3": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
+    "3.4": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
+    "4.0": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
+    "4.1": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
+    "4.2": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
+    "4.3": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
+    "4.4": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
+    "5.0": ["alpine38", "nvidia1604", "scratch38", "vaapi1804", "alpine313"],
 }
 
 last = version.split(".")
@@ -120,9 +122,9 @@ for version in keep_version:
     short_version = get_shorten_version(version)
     major_version = get_major_version(version)
     ver_path = os.path.join("docker-images", short_version)
-    for existing_variant in os.listdir(ver_path):
-        if existing_variant not in compatible_variants:
-            shutil.rmtree(DIR_FORMAT_STR.format(short_version, existing_variant))
+#    for existing_variant in os.listdir(ver_path):
+#        if existing_variant not in compatible_variants:
+#            shutil.rmtree(DIR_FORMAT_STR.format(short_version, existing_variant))
 
     for variant in compatible_variants:
         siblings = [
