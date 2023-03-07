@@ -177,7 +177,7 @@ for version in keep_version:
             "--enable-libopencore-amrwb",
             "--enable-libopus",
             "--enable-libtheora",
-            "--enable-libvidstab",
+#            "--enable-libvidstab",
             "--enable-libvorbis",
             "--enable-libvpx",
             "--enable-libwebp",

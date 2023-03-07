@@ -11,9 +11,7 @@ RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcryp
 
 FROM        base AS build
 
-WORKDIR     /tmp/workdir
-
-ENV         %%ENV%%
+WORKDIR     /tmp/workdir ENV         %%ENV%%
 
 RUN     buildDeps="autoconf \
                    automake \

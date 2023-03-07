@@ -11,9 +11,7 @@ RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcryp
 
 FROM        base AS build
 
-WORKDIR     /tmp/workdir
-
-ENV         FFMPEG_VERSION=6.0 \
+WORKDIR     /tmp/workdir ENV         FFMPEG_VERSION=6.0 \
     AOM_VERSION=v1.0.0 \
     CHROMAPRINT_VERSION=1.5.0 \
     FDKAAC_VERSION=0.1.5 \
@@ -271,18 +269,6 @@ RUN  \
         make && \
         make install && \
         rm -rf ${DIR}
-## libvstab https://github.com/georgmartius/vid.stab
-RUN  \
-        DIR=/tmp/vid.stab && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/georgmartius/vid.stab/archive/v${LIBVIDSTAB_VERSION}.tar.gz && \
-        echo ${LIBVIDSTAB_SHA256SUM} | sha256sum --check &&  \
-        tar -zx --strip-components=1 -f v${LIBVIDSTAB_VERSION}.tar.gz && \
-        cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" . && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
 ## fridibi https://www.fribidi.org/
 RUN  \
         DIR=/tmp/fribidi && \
@@ -444,7 +430,6 @@ RUN  \
         --enable-libopus \
         --enable-libsrt \
         --enable-libtheora \
-        --enable-libvidstab \
         --enable-libvorbis \
         --enable-libvpx \
         --enable-libwebp \
