@@ -11,7 +11,9 @@ RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcryp
 
 FROM        base AS build
 
-WORKDIR     /tmp/workdir ENV         FFMPEG_VERSION=5.1.2 \
+WORKDIR     /tmp/workdir
+
+ENV         FFMPEG_VERSION=5.1.2 \
     AOM_VERSION=v1.0.0 \
     CHROMAPRINT_VERSION=1.5.0 \
     FDKAAC_VERSION=0.1.5 \
